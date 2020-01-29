@@ -1,5 +1,8 @@
+#!/usr/bin/env node
+
 const program = require("commander");
 const prettyBytes = require("pretty-bytes");
+const chalk = require("chalk");
 const _ = require("lodash");
 const moment = require("moment");
 var inquirer = require("inquirer");
@@ -8,8 +11,6 @@ const Octokit = require("@octokit/rest");
 program.option("-t, --token <PAT>", "Your GitHub PAT");
 program.option("-u, --user <username>", "Your GitHub username");
 program.option("-r, --repo <repository>", "Repository name");
-
-program.option("-l, --list", "List workflow artifacts");
 
 program.parse(process.argv);
 const showArtifacts = async ({ owner, repo, PAT }) => {
@@ -26,12 +27,15 @@ const showArtifacts = async ({ owner, repo, PAT }) => {
   });
 
   const prefs = { owner, repo };
+  ui.log.write(`${chalk.dim("[1/3]")} 🔍 Getting list of workflows...`);
 
   const {
     data: { workflows }
   } = await octokit.actions.listRepoWorkflows({ ...prefs });
 
   let everything = {};
+
+  ui.log.write(`${chalk.dim("[2/3]")} 🏃‍♀️ Getting list of workflow runs...`);
 
   let runs = await workflows.reduce(async (promisedRuns, w) => {
     const memo = await promisedRuns;
@@ -67,6 +71,12 @@ const showArtifacts = async ({ owner, repo, PAT }) => {
     if (!workflow_runs.length) return memo;
     return [...memo, ...workflow_runs];
   }, []);
+
+  ui.log.write(
+    `${chalk.dim(
+      "[3/3]"
+    )} 📦 Getting list of artifacts for each run... (this may take a while)`
+  );
 
   let all_artifacts = await runs.reduce(async (promisedArtifact, r) => {
     const memo = await promisedArtifact;
@@ -107,9 +117,7 @@ const showArtifacts = async ({ owner, repo, PAT }) => {
   });
 
   const out = _.orderBy(output, ["size_in_bytes"], ["desc"]);
-
   clearInterval(loadingInterval);
-  ui.updateBottomBar("Done.\n");
 
   inquirer
     .prompt([
@@ -145,8 +153,12 @@ const showArtifacts = async ({ owner, repo, PAT }) => {
               .then(r => {
                 console.log(
                   r.status === 204
-                    ? `Artifact ${aid} Deleted`
-                    : `Artifact ${aid} Could not be deleted.`
+                    ? `${chalk.green("[OK]")} Artifact with ID ${chalk.dim(
+                        aid
+                      )} deleted`
+                    : `${chalk.red("[ERR]")} Artifact with ID ${chalk.dim(
+                        aid
+                      )} could not be deleted.`
                 );
               })
               .catch(e => {
