@@ -25,5 +25,4 @@ Options:
 
 Watch this asciicast to see an example execution:
 
-[![asciicast](https://asciinema.org/a/2IVCKwbSAUtOFVaG9ixxaAoo3.svg)](https://asciinema.org/a/2IVCKwbSAUtOFVaG9ixxaAoo3)
-
+[![asciicast](https://asciinema.org/a/pWVSBic12Tj43AfBUtfTnn2xK.svg)](https://asciinema.org/a/pWVSBic12Tj43AfBUtfTnn2xK)
