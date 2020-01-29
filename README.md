@@ -1,4 +1,4 @@
-# ghe-cleanup - Clean up GitHub Actions artifacts
+# gha-cleanup - Clean up GitHub Actions artifacts
 
 List and delete artifacts created by GitHub Actions in your repository. 
 Requires a Personal Access Token with full repo permissions.
