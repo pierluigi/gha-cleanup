@@ -1,12 +1,13 @@
-# Actions Artifacts
+# ghe-cleanup - Clean up GitHub Actions artifacts
 
-List and delete artifacts on your repository. Requires a Personal Access Token.
+List and delete artifacts created by GitHub Actions in your repository. 
+Requires a Personal Access Token with full repo permissions.
 
 # Instructions
 
 ```
 yarn install
-yarn link // Optional step. Call ./cli.js instead
+npm link // Optional step. Call ./cli.js instead
 
 // Options can be supplied interactively or via flags
 
