@@ -8,8 +8,18 @@ const moment = require("moment");
 var inquirer = require("inquirer");
 const Octokit = require("@octokit/rest");
 
-program.option("-t, --token <PAT>", "Your GitHub PAT");
-program.option("-u, --user <username>", "Your GitHub username");
+const dotenv = require("dotenv");
+
+dotenv.config();
+
+program.option(
+  "-t, --token <PAT>",
+  "Your GitHub PAT (leave blank for prompt or set $GH_PAT)"
+);
+program.option(
+  "-u, --user <username>",
+  "Your GitHub username (leave blank for prompt or set $GH_USER)"
+);
 program.option("-r, --repo <repository>", "Repository name");
 
 program.parse(process.argv);
@@ -176,7 +186,7 @@ inquirer
       name: "PAT",
       message: "What's your GitHub PAT?",
       default: function() {
-        return program.token;
+        return program.token || process.env.GH_PAT;
       }
     },
     {
@@ -184,7 +194,7 @@ inquirer
       name: "owner",
       message: "Your username?",
       default: function() {
-        return program.user;
+        return program.user || process.env.GH_USER;
       }
     },
     {

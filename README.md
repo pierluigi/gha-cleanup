@@ -1,6 +1,6 @@
 # gha-cleanup - Clean up GitHub Actions artifacts
 
-List and delete artifacts created by GitHub Actions in your repository. 
+List and delete artifacts created by GitHub Actions in your repository.
 Requires a Personal Access Token with full repo permissions.
 
 # Instructions
@@ -21,6 +21,17 @@ Options:
   -h, --help               output usage information
 
 ```
+
+# Configuration
+
+You can pass the PAT and username directly from the prompt. To avoid repeating yourself all the time, create a .env file in the root (don't worry, it will be ignored by git) and set:
+
+```
+$GH_PAT=<Your-GitHub-Personal-Access-Token>
+$GH_USER=<Your-GitHub-Username>
+```
+
+Then you can simply invoke `gha-cleanup` and confirm the prefilled values.
 
 # Example
 
