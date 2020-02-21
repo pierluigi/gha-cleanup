@@ -3,6 +3,8 @@
 List and delete artifacts created by GitHub Actions in your repository.
 Requires a Personal Access Token with full repo permissions.
 
+![Screenshot](screenshot.png?raw=true "Script in action")
+
 # Instructions
 
 ```
@@ -33,8 +35,5 @@ $GH_USER=<Your-GitHub-Username>
 
 Then you can simply invoke `gha-cleanup` and confirm the prefilled values.
 
-# Example
 
-Watch this asciicast to see an example execution:
 
-[![asciicast](https://asciinema.org/a/pWVSBic12Tj43AfBUtfTnn2xK.svg)](https://asciinema.org/a/pWVSBic12Tj43AfBUtfTnn2xK)
